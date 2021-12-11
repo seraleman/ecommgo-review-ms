@@ -1,8 +1,11 @@
 package com.seraleman.review_ms.review;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "reviews")
 public class Review {
@@ -10,11 +13,12 @@ public class Review {
     @Id
     private String id;
 
-    @Field(value = "user_id")
-    private String userId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date;
 
-    @Field(value = "product_id")
-    private String productId;
+    private String user;
+
+    private String product;
 
     private String title;
 
@@ -28,20 +32,28 @@ public class Review {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getUser() {
+        return user;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     public String getTitle() {

@@ -1,5 +1,8 @@
 package com.seraleman.review_ms.review.dao.services;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReviewServiceImpl implements IReviewService {
-    
+
     @Autowired
     private IReviewDao reviewDao;
 
@@ -59,6 +62,9 @@ public class ReviewServiceImpl implements IReviewService {
     public ResponseEntity<?> create(Review review) {
 
         Review reviewNew = null;
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("America/Bogota"));
+        LocalDateTime bogotaLocal = zdt.toLocalDateTime();
+        review.setDate(bogotaLocal);
 
         try {
             reviewNew = reviewDao.save(review);
@@ -86,6 +92,7 @@ public class ReviewServiceImpl implements IReviewService {
         try {
             reviewCurrent.setText(review.getText());
             reviewCurrent.setTitle(review.getTitle());
+            reviewCurrent.setDate(review.getDate());
             reviewDao.save(reviewCurrent);
         } catch (DataAccessException e) {
             return response.errorDataAccess(e);
